@@ -12,6 +12,8 @@ import (
 	"appengine/memcache"
 )
 
+const key = "ids"
+
 func init() {
 	http.HandleFunc("/", main)
 	http.HandleFunc("/update", update)
@@ -31,7 +33,7 @@ func main(w http.ResponseWriter, r *http.Request) {
 	if !found {
 		ids = append(ids, id)
 		_ = memcache.Set(c, &memcache.Item{
-			Key:   "ids",
+			Key:   key,
 			Value: []byte(strings.Join(ids, ",")),
 		})
 	}
@@ -46,9 +48,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	x := r.FormValue("x")
 	y := r.FormValue("y")
 	from := r.FormValue("id")
+	msg := fmt.Sprintf("{\"x\":%s,\"y\":%s,\"id\":\"%s\"}", x, y, from)
 	for _, id := range ids {
 		if id != from {
-			_ = channel.Send(c, id, fmt.Sprintf("{\"x\":%s,\"y\":%s,\"id\":\"%s\"}", x, y, from))
+			_ = channel.Send(c, id, msg)
 		}
 	}
 }
@@ -67,18 +70,19 @@ func leave(w http.ResponseWriter, r *http.Request) {
 	if i != -1 {
 		ids = append(ids[:i], ids[i+1:]...)
 		_ = memcache.Set(c, &memcache.Item{
-			Key:   "ids",
+			Key:   key,
 			Value: []byte(strings.Join(ids, ",")),
 		})
 	}
+	msg := fmt.Sprintf("{\"x\":-1,\"y\":-1,\"id\":\"%s\"}", id)
 	for _, id := range ids {
-		_ = channel.Send(c, id, fmt.Sprintf("{\"x\":-1,\"y\":-1,\"id\":\"%s\"}", id))
+		_ = channel.Send(c, id, msg)
 	}
 }
 
 func getIDs(c appengine.Context) []string {
 	var ids []string
-	if i, err := memcache.Get(c, "ids"); err == nil {
+	if i, err := memcache.Get(c, key); err == nil {
 		ids = strings.Split(string(i.Value), ",")
 	}
 	return ids
