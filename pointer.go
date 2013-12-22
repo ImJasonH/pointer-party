@@ -87,9 +87,11 @@ func getIDs(c appengine.Context) []string {
 var tmpl = template.Must(template.New("n").Parse(`
 <!doctype html>
 <html style="height:100%;">
-  <head><title>Pointer Party!</title></head>
-  <body style="height:100%;font-family:Arial;font-size:10px;">
+  <head>
+    <title>Pointer Party!</title>
     <script src='/_ah/channel/jsapi'></script>
+  </head>
+  <body style="height:100%;font-family:Arial;font-size:10px;">
     <script type="text/javascript">
       var my_id = '{{.ClientID }}';
       var checkEvery = 200; //ms
@@ -145,7 +147,7 @@ var tmpl = template.Must(template.New("n").Parse(`
     </script>
     <p><b>Welcome to Pointer Party!</b></p>
     <p><b>Directions:</b> Move your mouse pointer. See the mouse pointers of other users on this page.</p>
-    <p>Built using <a href="http://code.google.com/appengine/docs/python/channel/overview.html">App Engine Channel API</a> (<a href="http://code.google.com/p/pointerparty/source/browse/">src</a>)
+    <p>Built using <a href="https://developers.google.com/appengine/docs/go/channel/reference">App Engine Channel API</a> (<a href="https://github.com/ImJasonH/pointerparty">src</a>)
   </body>
 </html>
 `))
