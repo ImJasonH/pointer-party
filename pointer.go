@@ -115,7 +115,7 @@ var tmpl = template.Must(template.New("n").Parse(`
         if (img == null) {
           img = new Image();
           img.id = id;
-          img.src = '/pointer.png';
+          img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAVCAYAAAByrA+0AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9gFAhEpAuf8RJkAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAHNJREFUOMu1k9sKwCAMQ5uw///l7GEOOrUXH1YQteRYG9HMTHYQHLOOAElt6K3Qhug3HYhzooK4S2YQo5MiiNl9dxArV2aIHe89dGVCAAvLhgh+sBDHtg4xniVyl5y4XQFrKwhtxckHQv0E+vRI+yHke7gBphY1FrmNcUIAAAAASUVORK5CYII=';
           img.style.position = 'absolute';
           body.appendChild(img);
         }

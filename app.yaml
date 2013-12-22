@@ -4,10 +4,6 @@ runtime: go
 api_version: go1
 
 handlers:
-- url: /pointer.png
-  static_files: pointer.png
-  upload: pointer.png
-
 - url: /favicon.ico
   static_files: favicon.ico
   upload: favicon.ico
